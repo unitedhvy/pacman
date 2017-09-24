@@ -1,0 +1,77 @@
+draw a 10x10 board grid
+	for (int count=0; count<11; count++) {
+		g.drawLine(25,25+count*50,525,25+count*50);
+	}
+	for (int count=0; count<11; count++) {
+		g.drawLine(25+count*50,25,25+count*50,525);
+	}
+
+store the locations in an array:
+	int[][] locarr = new int [13][2];
+	//the 0 is the pacman position, on a 10x10 grid
+	//1-6 are the monsters, 6-12 are the cheese
+	//the second part, with 2 spaces is the x,y 
+	//location
+
+randomly locate 6 cheese(unique positions), 6 monsters, and Pacman
+		locarr[objnum][0] = (int)(10.0*Math.random());
+		locarr[objnum][1] = (int)(10.0*Math.random());
+
+make sure that the cheese and/or monsters do not overlap
+		for (int count = 0; count < (objnum-1); count++) 
+			if (locarr[objnum][0]==locarr[count][0])
+				if (locarr[objnum][1]==locarr[count][1]) 
+					return true;
+		return false;
+		
+		
+randomly move the monsters
+	int monsterMove = (int)(4.0*Math.random());
+	switch (monsterMove) { //save the new position
+		case 0:locarr[count][1]--;break;
+		case 1:locarr[count][1]++;break;
+		case 2:locarr[count][0]--;break;
+		case 3:locarr[count][0]++;break;
+	}
+
+allow user to move up, right, down, and left(and restart)
+	switch (c) { //save the new position
+		case 'w':locarr[0][1]--;break;
+		case 's':locarr[0][1]++;break;
+		case 'a':locarr[0][0]--;break;
+		case 'd':locarr[0][0]++;break;
+	}
+	//to restart, run the constructor
+	
+wrap movement around board
+	for (int count = 0; count < 13; count++)
+		switch (locarr[count][0]) { //save the new position
+			case -1:locarr[count][0]=9;break;
+			case 10:locarr[count][0]=0;break;
+		}
+		switch (locarr[0][1]) { //save the new position
+			case -1:locarr[count][1]=9;break;
+			case 10:locarr[count][1]=0;break;
+		}
+
+pacman eats cheese
+	for (int count = 0; count < 13; count++) 
+		if (locarr[count][0]==locarr[0][0])
+			if (locarr[count][1]==locarr[0][1]) {
+				return count;
+				cheesecount++;
+			}	
+	return 0;
+
+end game
+	if (cheesecount == 6) {
+		drawString("Game Over",,);
+	for (int count = 1; count < 7; count++) 
+		if (locarr[count][0]==locarr[0][0])
+			if (locarr[count][1]==locarr[0][1])
+				drawString("Game Over",,); 
+
+
+			
+	
+
